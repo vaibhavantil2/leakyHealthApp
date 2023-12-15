@@ -169,7 +169,7 @@ public class PIIUtils {
         } catch (GooglePlayServicesNotAvailableException | GooglePlayServicesRepairableException e) {
             // ...
         }
-//       String userId = adInfo.getId();
+       String userId = adInfo.getId();
         return userId;
     }
 
