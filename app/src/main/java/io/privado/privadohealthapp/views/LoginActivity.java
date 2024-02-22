@@ -63,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent = new Intent(LoginActivity.this, SignupActivity.class);
         startActivity(intent);
     }
-/*        @Override
+    @Override
     protected void onStart() {
         super.onStart();
         Branch.getInstance().initSession((referringParams, error) -> {
@@ -85,7 +85,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-*/
 
 
 }
