@@ -15,6 +15,8 @@ import com.amplitude.android.Configuration;
 import com.facebook.CallbackManager;
 import com.facebook.login.widget.LoginButton;
 import com.mixpanel.android.mpmetrics.MixpanelAPI;
+import com.appsflyer.AppsFlyerConversionListener;
+import com.appsflyer.AppsFlyerLib;
 import io.branch.referral.Branch;
 import io.branch.referral.BranchError;
 import io.privado.privadohealthapp.R;
@@ -41,6 +43,30 @@ public class LoginActivity extends AppCompatActivity {
         loginViewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
 
         email = (EditText) findViewById(R.id.editTextTextEmailAddress);
+
+                // Initialize Appsflyer
+        AppsFlyerLib.getInstance().init(getString(R.string.appsflyer_dev_key), new AppsFlyerConversionListener() {
+            @Override
+            public void onConversionDataSuccess(Map<String, Object> conversionData) {
+                // Handle conversion data success
+            }
+
+            @Override
+            public void onConversionDataFail(String errorMessage) {
+                // Handle conversion data failure
+            }
+
+            @Override
+            public void onAppOpenAttribution(Map<String, String> attributionData) {
+                // Handle app open attribution
+            }
+
+            @Override
+            public void onAttributionFailure(String errorMessage) {
+                // Handle attribution failure
+            }
+        }, getApplicationContext());
+        AppsFlyerLib.getInstance().start(this);
 
     }
     public void onClickLogin(View view){
