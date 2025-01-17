@@ -1,2 +1,2 @@
 # leakyHealthApp
-Demo java mobile App for static code analysis 
+Demo java mobile App for static code analysis.
