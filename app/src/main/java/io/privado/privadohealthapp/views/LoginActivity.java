@@ -10,6 +10,19 @@ import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.adcolony.sdk.AdColony;
+import com.adcolony.sdk.AdColonyAppOptions;
+import com.adcolony.sdk.AdColonyZone;
+import com.adcolony.sdk.AdColonyAd;
+import com.adcolony.sdk.AdColonyAdAvailabilityListener;
+import com.adcolony.sdk.AdColonyAdOptions;
+import com.adcolony.sdk.AdColonyAdRequestError;
+import com.adcolony.sdk.AdColonyAdViewListener;
+import com.adcolony.sdk.AdColonyAdView;
+import com.adcolony.sdk.AdColonyInterstitial;
+import com.adcolony.sdk.AdColonyInterstitialListener;
+import com.adcolony.sdk.AdColonyRewardListener;
+
 import com.amplitude.android.Amplitude;
 import com.amplitude.android.Configuration;
 import com.facebook.CallbackManager;
@@ -44,7 +57,12 @@ public class LoginActivity extends AppCompatActivity {
 
         email = (EditText) findViewById(R.id.editTextTextEmailAddress);
 
-                // Initialize Appsflyer
+        // Initialize AdColony
+        AdColonyAppOptions appOptions = new AdColonyAppOptions()
+            .setUserID("unique_user_id");
+        AdColony.configure(this, appOptions, ADCOLONY_APP_ID, ADCOLONY_ZONE_ID);
+        
+        // Initialize Appsflyer
         AppsFlyerLib.getInstance().init(getString(R.string.appsflyer_dev_key), new AppsFlyerConversionListener() {
             @Override
             public void onConversionDataSuccess(Map<String, Object> conversionData) {
