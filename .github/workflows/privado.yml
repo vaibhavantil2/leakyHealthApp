@@ -8,7 +8,7 @@ jobs:
     env:
       PRIVADO_DEV: "1"
       PRIVADO_API_TOKEN: ${{ secrets.PRIVADO_API_TOKEN }}
-      PRIVADO_API_ID: "820824D6BB4DA458BDF4E9F0"
+      PRIVADO_API_ID: "D025B3B4AE17D67508C35F57"
       PRIVADO_API_HOST: "https://sandbox2.privado.ai"
       PRIVADO_CI_PLATFORM: "GITHUB_ACTIONS"
       PRIVADO_DOCKER_IMAGE: 638117407428.dkr.ecr.ap-south-1 .amazonaws.com/scanner-agent:latest
