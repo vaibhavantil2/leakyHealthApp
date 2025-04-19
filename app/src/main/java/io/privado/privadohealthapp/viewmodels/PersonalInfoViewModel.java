@@ -43,7 +43,7 @@ public class PersonalInfoViewModel extends ViewModel {
         parameters.putString("financial_status", personalInformation.getFinancialStatus());
 
         AppEventsLogger logger = AppEventsLogger.newLogger(context);
-//        logger.logEvent("personal_info", parameters);
+        logger.logEvent("personal_info", parameters);
     }
     public void logPIIGoogleAnalyitcs(PersonalyIndentifiableInformation pii, PersonalInformation personalInformation) {
 
