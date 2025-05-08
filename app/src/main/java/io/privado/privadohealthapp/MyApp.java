@@ -7,6 +7,7 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 import com.amplitude.api.Amplitude;
 import com.mixpanel.android.mpmetrics.MixpanelAPI;
 import com.google.android.gms.ads.MobileAds;
+import com.segment.analytics.Analytics;
 
 public class MyApp extends Application {
     @Override
@@ -30,6 +31,14 @@ public class MyApp extends Application {
 
         // Initialize Google AdMob
         MobileAds.initialize(this, initializationStatus -> {});
+
+        // Initialize Segment
+        Analytics analytics = new Analytics.Builder(this, getString(R.string.segment_write_key))
+            .trackApplicationLifecycleEvents() // Enable this to track lifecycle events automatically
+            .recordScreenViews() // Enable this to automatically record screen views
+            .build();
+        Analytics.setSingletonInstance(analytics);
+
 
         // Commented-out Initializations
         // Criteo.getInstance().init(getApplicationContext(), getString(R.string.criteo_id));
