@@ -31,8 +31,9 @@ public class MyApp extends Application {
         // Initialize Google AdMob
         MobileAds.initialize(this, initializationStatus -> {});
 
+
         // Commented-out Initializations
-        // Criteo.getInstance().init(getApplicationContext(), getString(R.string.criteo_id));
+         Criteo.getInstance().init(getApplicationContext(), getString(R.string.criteo_id));
         // SnapPixel.init(this, getString(R.string.snap_pixel_id));
     }
 }
