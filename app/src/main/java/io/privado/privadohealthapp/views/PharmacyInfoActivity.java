@@ -46,6 +46,6 @@ public class PharmacyInfoActivity extends AppCompatActivity {
         PharmacyInformation pharmacyInformation = new PharmacyInformation(drug.getText().toString(), form.getText().toString(), pharmacyLocation.getText().toString(), isCouponTaken.getText().toString());
 
         pharmacyInfoViewModel.logPIIFacebook(PharmacyInfoActivity.this, personalyIndentifiableInformation, pharmacyInformation);
-        pharmacyInfoViewModel.logPIIGoogleAnalyitcs(personalyIndentifiableInformation, pharmacyInformation);
+        pharmacyInfoViewModel.logPIIGoogleAnalyitcs(PharmacyInfoActivity.this, personalyIndentifiableInformation, pharmacyInformation);
     }
 }

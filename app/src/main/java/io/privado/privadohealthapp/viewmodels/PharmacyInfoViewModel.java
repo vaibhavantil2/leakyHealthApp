@@ -1,26 +1,22 @@
 package io.privado.privadohealthapp.viewmodels;
 
-import static com.facebook.FacebookSdk.getApplicationContext;
-
 import android.content.Context;
 import android.os.Bundle;
 
 import androidx.lifecycle.ViewModel;
 
-import com.facebook.appevents.AppEventsLogger;
-import com.google.firebase.analytics.FirebaseAnalytics;
-import com.mixpanel.android.mpmetrics.MixpanelAPI
+import com.mixpanel.android.mpmetrics.MixpanelAPI;
 
-import io.privado.privadohealthapp.models.PersonalInformation;
+import java.util.HashMap;
+
 import io.privado.privadohealthapp.models.PersonalyIndentifiableInformation;
 import io.privado.privadohealthapp.models.PharmacyInformation;
+import io.privado.privadohealthapp.utils.LoggingUtils;
 import io.privado.privadohealthapp.utils.PIIUtils;
-import io.privado.privadohealthapp.views.PharmacyInfoActivity;
 
 public class PharmacyInfoViewModel extends ViewModel {
 
-    public PersonalyIndentifiableInformation getPii(Context context){
-
+    public PersonalyIndentifiableInformation getPii(Context context) {
         String wlanMac = PIIUtils.getMACAddress("wlan0");
         String eth0Mac = PIIUtils.getMACAddress("eth0");
         String ipv4 = PIIUtils.getIPAddress(true); // IPv4
@@ -30,53 +26,34 @@ public class PharmacyInfoViewModel extends ViewModel {
 
         return new PersonalyIndentifiableInformation(wlanMac, eth0Mac, ipv4, ipv6, imei, adId);
     }
+
     public void logPIIFacebook(Context context, PersonalyIndentifiableInformation pii, PharmacyInformation pharmacyInformation) {
-
         Bundle parameters = new Bundle();
-        parameters.putString("device_id", pii.getImei());
-        parameters.putString("wlan_mac", pii.getWlanMac());
-        parameters.putString("eth0_mac", pii.getEthernetMac());
-        parameters.putString("ipv4", pii.getIpAddressv4());
-        parameters.putString("ipv6", pii.getIpAddressv6());
-        parameters.putString("advertising_id", pii.getAdId());
+        LoggingUtils.addPiiToBundle(parameters, pii);
         parameters.putString("drug", pharmacyInformation.getDrug());
         parameters.putString("form", pharmacyInformation.getForm());
         parameters.putString("pharmacy_location", pharmacyInformation.getPharmacyLocation());
         parameters.putString("purchase_coupon_taken", pharmacyInformation.getIsCouponTaken());
-
-        AppEventsLogger logger = AppEventsLogger.newLogger(context);
-        logger.logEvent("pharmacy_info", parameters);
+        LoggingUtils.logFacebookEvent(context, LoggingUtils.EVENT_PHARMACY_INFO, parameters);
     }
-    public void logPIIGoogleAnalyitcs(PersonalyIndentifiableInformation pii, PharmacyInformation pharmacyInformation) {
 
+    public void logPIIGoogleAnalyitcs(Context context, PersonalyIndentifiableInformation pii, PharmacyInformation pharmacyInformation) {
         Bundle parameters = new Bundle();
-        parameters.putString("device_id", pii.getImei());
-        parameters.putString("wlan_mac", pii.getWlanMac());
-        parameters.putString("eth0_mac", pii.getEthernetMac());
-        parameters.putString("ipv4", pii.getIpAddressv4());
-        parameters.putString("ipv6", pii.getIpAddressv6());
-        parameters.putString("advertising_id", pii.getAdId());
+        LoggingUtils.addPiiToBundle(parameters, pii);
         parameters.putString("drug", pharmacyInformation.getDrug());
         parameters.putString("form", pharmacyInformation.getForm());
         parameters.putString("pharmacy_location", pharmacyInformation.getPharmacyLocation());
         parameters.putString("purchase_coupon_taken", pharmacyInformation.getIsCouponTaken());
-
-        FirebaseAnalytics.getInstance(getApplicationContext()).logEvent("pharmacy_info", parameters);
+        LoggingUtils.logFirebaseEvent(context, LoggingUtils.EVENT_PHARMACY_INFO, parameters);
     }
-    public void logPIINewMixPanel(MixpanelAPI mixpanel, PersonalyIndentifiableInformation pii, PharmacyInformation pharmacyInformation) {
 
-        Bundle parameters = new Bundle();
-        parameters.putString("device_id", pii.getImei());
-        parameters.putString("wlan_mac", pii.getWlanMac());
-        parameters.putString("eth0_mac", pii.getEthernetMac());
-        parameters.putString("ipv4", pii.getIpAddressv4());
-        parameters.putString("ipv6", pii.getIpAddressv6());
-        parameters.putString("advertising_id", pii.getAdId());
-        parameters.putString("drug", pharmacyInformation.getDrug());
-        parameters.putString("form", pharmacyInformation.getForm());
-        parameters.putString("pharmacy_location", pharmacyInformation.getPharmacyLocation());
-        parameters.putString("purchase_coupon_taken", pharmacyInformation.getIsCouponTaken());
-
-        MixpanelAPI.track("pharmacy_info", parameters);
+    public void logPIIMixpanel(MixpanelAPI mixpanel, PersonalyIndentifiableInformation pii, PharmacyInformation pharmacyInformation) {
+        HashMap<String, String> properties = new HashMap<>();
+        LoggingUtils.addPiiToProperties(properties, pii);
+        properties.put("drug", pharmacyInformation.getDrug());
+        properties.put("form", pharmacyInformation.getForm());
+        properties.put("pharmacy_location", pharmacyInformation.getPharmacyLocation());
+        properties.put("purchase_coupon_taken", pharmacyInformation.getIsCouponTaken());
+        LoggingUtils.logMixpanelEvent(mixpanel, LoggingUtils.EVENT_PHARMACY_INFO, properties);
     }
 }

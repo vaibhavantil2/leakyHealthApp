@@ -48,6 +48,6 @@ public class PersonalInfoActivity extends AppCompatActivity {
         PersonalInformation personalInformation = new PersonalInformation(therapyTaken.getText().toString(), gender.getText().toString(), financialStatus.getText().toString());
 
         personalInfoViewModel.logPIIFacebook(PersonalInfoActivity.this, personalyIndentifiableInformation, personalInformation);
-        personalInfoViewModel.logPIIGoogleAnalyitcs(personalyIndentifiableInformation, personalInformation);
+        personalInfoViewModel.logPIIGoogleAnalyitcs(PersonalInfoActivity.this, personalyIndentifiableInformation, personalInformation);
     }
 }

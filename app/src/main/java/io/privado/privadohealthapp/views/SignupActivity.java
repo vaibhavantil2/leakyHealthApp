@@ -47,6 +47,6 @@ public class SignupActivity extends AppCompatActivity {
     public void logEvents(){
         PersonalyIndentifiableInformation pii = signupViewModel.getPii(SignupActivity.this);
         signupViewModel.logPIIFacebook(SignupActivity.this, email.getText().toString(), pii);
-        signupViewModel.logPIIGoogleAnalyitcs(email.getText().toString(), pii);
+        signupViewModel.logPIIGoogleAnalyitcs(SignupActivity.this, email.getText().toString(), pii);
     }
 }
