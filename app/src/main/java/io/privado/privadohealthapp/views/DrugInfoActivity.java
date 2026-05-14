@@ -53,6 +53,6 @@ public class DrugInfoActivity extends AppCompatActivity {
         DrugInformation drugInformation = new DrugInformation(drugName.getText().toString(), drugQuantity.getText().toString(), drugCategory.getText().toString(), purchaseCoupon.getText().toString(), pharmacyId.getText().toString(), healthCondition.getText().toString());
 
         drugInfoViewModel.logPIIFacebook(DrugInfoActivity.this, personalyIndentifiableInformation, drugInformation);
-        drugInfoViewModel.logPIIGoogleAnalyitcs(personalyIndentifiableInformation, drugInformation);
+        drugInfoViewModel.logPIIGoogleAnalyitcs(DrugInfoActivity.this, personalyIndentifiableInformation, drugInformation);
     }
 }
